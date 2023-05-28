@@ -6,6 +6,8 @@ on:
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
+    env:
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     permissions:
       contents: read
       packages: write
@@ -16,6 +18,7 @@ jobs:
 
       - name: Clone ChatGPT-Proxy-V4
         run: git clone https://github.com/moeakwak/ChatGPT-Proxy-V4.git
+        
       - name: Set tag
         id: tag
         run: |
