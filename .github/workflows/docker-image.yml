@@ -96,6 +96,8 @@ jobs:
       - name: Log in to Dockerhub
         uses: docker/login-action@v2
         with:
+          # DOCKERHUB_USERNAME 是 docker hub 账号名.
+          # DOCKERHUB_TOKEN: docker hub => Account Setting => Security 创建.
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
@@ -108,7 +110,9 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            $(echo "${username}" | tr '[:upper:]' '[:lower:]')/${{ github.event.repository.name }}:${TAG}
-            $(echo "${username}" | tr '[:upper:]' '[:lower:]')/${{ github.event.repository.name }}:latest
+            ${{ env.username }}/${{ github.event.repository.name }}:${{ env.TAG }}
+            ${{ env.username }}/${{ github.event.repository.name }}:latest
+       #     $(echo "${username}" | tr '[:upper:]' '[:lower:]')/${{ github.event.repository.name }}:${TAG}
+       #     $(echo "${username}" | tr '[:upper:]' '[:lower:]')/${{ github.event.repository.name }}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
